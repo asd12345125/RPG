@@ -1,0 +1,84 @@
+from random import randint
+from time import sleep
+from characters import Hero, Enemy
+
+from coxpanenie import *
+
+def main():
+    hero = load_progress()
+    if hero is None:
+        name = input('введите своё имя: ')
+        mix = f'Здравствуйте, {name}'
+        for h in range(len(mix)):
+            print(mix[h], end='')
+            sleep(0.1)
+        print('')
+        hero = Hero(name)
+    else:
+        print(f'Имя: {hero.name}, Здоровье: {hero.health}, Уровень: {hero.level}')
+        
+    enemy = Enemy(f"Зомби {hero.level}")
+    
+    while hero.is_alive() and enemy.is_alive():
+        print('')
+        action = input('Выберите действие (удар / блок / уворот): ').strip().lower()
+        if action == 'удар':
+            hero.attack(enemy)
+        elif action == 'блок':
+            if randint(1, 10) >= 5:
+                regeneration = randint(4, 11)
+                hero.health += regeneration
+                mix = f'{name} пополнил свои жизни на {regeneration} и теперь у {name} {hero.health} хп'
+                for h in range(len(mix)):
+                    print(mix[h], end='')
+                sleep(0.1)
+            else:
+                hero.attack(enemy)
+                print()
+                mix = f'блок {name} отразил урон от удара на {enemy.name}'
+                for h in range(len(mix)):
+                    print(mix[h], end='')
+                sleep(0.1)
+                continue
+        elif action == 'уворот':
+            if randint(1, 10) >= 5:
+                hero.attack(enemy)
+                mix = f'{name} уклоняясь нанёс урон {enemy.name}'
+                for h in range(len(mix)):
+                    print(mix[h], end='')
+                sleep(0.1)
+                continue
+            else:
+                mix = f'{name} уклонился от удара {enemy.name} который был {enemy.power}'
+                for h in range(len(mix)):
+                    print(mix[h], end='')
+                sleep(0.1)
+                hero.health -= 3
+                continue
+        else:
+            mix = 'Неверное действие попробуйте ещё раз'
+            for h in range(len(mix)):
+                print(mix[h], end='')
+            sleep(0.1)
+            continue
+        print('')
+        if enemy.is_alive():
+            enemy.attack(hero)
+            mix = f'У {name}: {hero.health}'
+            for h in range(len(mix)):
+                print(mix[h], end='')
+            sleep(0.1)
+            print('')
+            mix = f'Здоровье {enemy.name}: {enemy.health}'
+            for h in range(len(mix)):
+                print(mix[h], end='')
+            sleep(0.1)
+            print('')
+        else:
+            hero.level_up()
+            save_progress(hero)
+            enemy = Enemy(f'Зомби {hero.level}')
+            print('Вы повысили уровень!!!')
+if __name__ == '__main__':
+    main()
+
