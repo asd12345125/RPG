@@ -1,0 +1,24 @@
+from time import sleep
+from characters import Hero
+
+def save_progress(hero):
+    with open('save.txt', 'w') as file: #w-записывать r- считывать
+            file.write(f'{hero.name},{hero.health},{hero.level}')
+def load_progress():
+    try:
+        with open('save.txt', 'r') as file:
+            line = file.readline().strip()
+            if line:
+                name, health, level = line.split(',')
+                hero = Hero(name)
+                hero.health = int(health)
+                hero.level = int(level)
+                return hero
+            else:
+                print('Файл сохранения пуст!')
+
+                return None
+    except Exception:
+        print('Файл не найден или повреждён')
+
+        return None
