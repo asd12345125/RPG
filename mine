@@ -3,8 +3,9 @@ from time import sleep
 from characters import Hero, Enemy
 
 from coxpanenie import *
-
+inventary = []
 def main():
+    
     hero = load_progress()
     if hero is None:
         name = input('введите своё имя: ')
@@ -28,14 +29,14 @@ def main():
             if randint(1, 10) >= 5:
                 regeneration = randint(4, 11)
                 hero.health += regeneration
-                mix = f'{name} пополнил свои жизни на {regeneration} и теперь у {name} {hero.health} хп'
+                mix = f'{hero.name} пополнил свои жизни на {regeneration} и теперь у {hero.name} {hero.health} хп'
                 for h in range(len(mix)):
                     print(mix[h], end='')
                 sleep(0.1)
             else:
                 hero.attack(enemy)
                 print()
-                mix = f'блок {name} отразил урон от удара на {enemy.name}'
+                mix = f'блок {hero.name} отразил урон от удара на {enemy.name}'
                 for h in range(len(mix)):
                     print(mix[h], end='')
                 sleep(0.1)
@@ -43,13 +44,13 @@ def main():
         elif action == 'уворот':
             if randint(1, 10) >= 5:
                 hero.attack(enemy)
-                mix = f'{name} уклоняясь нанёс урон {enemy.name}'
+                mix = f'{hero.name} уклоняясь нанёс урон {enemy.name}'
                 for h in range(len(mix)):
                     print(mix[h], end='')
                 sleep(0.1)
                 continue
             else:
-                mix = f'{name} уклонился от удара {enemy.name} который был {enemy.power}'
+                mix = f'{hero.name} уклонился от удара {enemy.name} который был {enemy.power}'
                 for h in range(len(mix)):
                     print(mix[h], end='')
                 sleep(0.1)
@@ -64,7 +65,7 @@ def main():
         print('')
         if enemy.is_alive():
             enemy.attack(hero)
-            mix = f'У {name}: {hero.health}'
+            mix = f'У {hero.name}: {hero.health}'
             for h in range(len(mix)):
                 print(mix[h], end='')
             sleep(0.1)
@@ -78,7 +79,16 @@ def main():
             hero.level_up()
             save_progress(hero)
             enemy = Enemy(f'Зомби {hero.level}')
-            print('Вы повысили уровень!!!')
+            if randint(1, 3) == 2:
+                if randint(1, 3) == 2:
+                    print('Вы нашли зелье здоровье')
+                    hero.health += 10
+                else:
+                    print('Вы нашли амулет силы')
+                    hero.power += 2
+            else:
+                pass
 if __name__ == '__main__':
     main()
+
 
