@@ -1,5 +1,6 @@
 from time import sleep
 from random import randint
+
 class User:
     def __init__(self, name, health, power, level):
         self. name = name
@@ -44,6 +45,9 @@ class Hero(User):
         for h in range(len(mix)):
             print(mix[h], end='')
             sleep(0.1)
+            
+    def zelie(self):
+        pass
         
     
 
@@ -51,8 +55,3 @@ class Hero(User):
 class Enemy(User):
     def __init__(self, name):
         super().__init__(name, health=50, power=5 , level=0)
-       
-# mix = 'Здравствуйте'       
-# for h in range(len(mix)):
-#     print(mix[h], end='')
-#     sleep(0.1)
