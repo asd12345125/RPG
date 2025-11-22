@@ -1,0 +1,58 @@
+from time import sleep
+from random import randint
+class User:
+    def __init__(self, name, health, power, level):
+        self. name = name
+        self.health = health
+        self.power = power
+        self.level = level
+        
+    def attack(self, other):
+        other.health -= self.power
+        if randint(1, 10) == 2:
+            other.health -= self.power
+            mix = f'{self.name} попал в голову, и снёс ещё {self.power} хп у {other.name}, и у него осталось {other.health}'
+            for h in range(len(mix)):
+                print(mix[h], end='')
+                sleep(0.1)
+        else:
+            print('-')
+                   
+
+        mix = (f'{self.name} атакует {other.name} и наносит урон {self.power}')
+        for h in range(len(mix)):
+            print(mix[h], end='')
+            sleep(0.1)
+        print('')
+        mix = (f'У {other.name} осталось {other.health}')
+        for h in range(len(mix)):
+            print(mix[h], end='')
+            sleep(0.1)
+
+    def is_alive(self):
+        return self.health > 0
+
+class Hero(User):
+    def __init__(self, name):
+        super().__init__(name, health=100, power=10, level=0)
+        
+    def level_up(self):
+        self.level += 1
+        self.health += 10
+        self.power += 1
+        mix = f'{self.name} поднялся на уровень {self.level}!'
+        for h in range(len(mix)):
+            print(mix[h], end='')
+            sleep(0.1)
+        
+    
+
+
+class Enemy(User):
+    def __init__(self, name):
+        super().__init__(name, health=50, power=5 , level=0)
+       
+# mix = 'Здравствуйте'       
+# for h in range(len(mix)):
+#     print(mix[h], end='')
+#     sleep(0.1)
